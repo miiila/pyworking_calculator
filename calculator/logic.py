@@ -4,7 +4,7 @@ def main():
 	app = QtWidgets.QApplication([])
 	window = QtWidgets.QDialog()
 
-	with open('calculator.ui') as f:
+	with open('calculator/calculator.ui') as f:
 		uic.loadUi(f, window)
 
 	sb_operand1 = window.findChild(QtWidgets.QDoubleSpinBox, 'sb_operand1')
@@ -38,7 +38,7 @@ def main():
 			sb_result.setPrefix('ERR ')
 			sb_result.setValue(0)
 		else:
-			sb_result.setPrefix('ERR ')
+			sb_result.setPrefix('')
 			sb_result.setValue(result)
 
 	sb_operand1.valueChanged.connect(calculate)
@@ -47,5 +47,3 @@ def main():
 
 	window.show()
 	return app.exec()
-
-main()

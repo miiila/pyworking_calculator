@@ -1,10 +1,11 @@
 from PyQt5 import QtWidgets, uic
+import pkg_resources
 
 def main():
 	app = QtWidgets.QApplication([])
 	window = QtWidgets.QDialog()
 
-	with open('calculator/calculator.ui') as f:
+	with pkg_resources.resource_stream('calculator','calculator.ui') as f:
 		uic.loadUi(f, window)
 
 	sb_operand1 = window.findChild(QtWidgets.QDoubleSpinBox, 'sb_operand1')

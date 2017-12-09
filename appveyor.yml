@@ -1,4 +1,4 @@
-clone_folder: c:\projects\kalkulacka
+clone_folder: c:\projects\calculator
 clone_depth: 2
 
 platform: x64
@@ -18,10 +18,10 @@ install:
 build: off
 
 test_script:
-- "%PYTHON%\\python.exe -m pytest test_kalkulacka"
+- "%PYTHON%\\python.exe -m pytest tests"
 
 after_test:
-- "%PYTHON%\\python.exe -m PyInstaller __main__.py -n kalkulacka-app --exclude-module tkinter --add-data kalkulacka;kalkulacka -F -w"
+- "%PYTHON%\\python.exe -m PyInstaller __main__.py -n calculator-app --exclude-module tkinter --add-data calculator;calculator -F -w"
 
 artifacts:
 - path: dist\*

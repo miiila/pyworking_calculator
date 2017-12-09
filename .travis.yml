@@ -1,0 +1,30 @@
+language: python
+sudo: false
+cache: pip
+
+matrix:
+  include:
+    - os: linux
+      python: 3.6
+      language: python
+
+install:
+  - python3 -m pip install --upgrade pip
+  - python3 -m pip install pyQt5 pytest pyinstaller
+
+script:
+  - python3 -m pytest -vv tests/
+  - pyinstaller __main__.py -n calculator-app
+      --exclude-module tkinter
+      --add-data calculator:calculator
+      -F -w
+
+deploy:
+    provider: releases
+    api_key:
+        secure: Z6IsVPlVIlBoK7jfGfjKAuwfajCgz7u5qDKmS6Yrf8FQ5KjZ3r+MBHihuLlbZNwXrB4eqgTBUCA8OhlpRcWEgy1h8cWhKB+SxgsoMZJP/W5/PI1XuB/2T2h5mq76R1w5ZnH6t1LlEMF9E5vM0iWF+zxGhG/37trRIl4YLHzIc0jSlGp+y8Dw374wwhM3AIIs6RLEgHxPNSHbU/UHmi4ExzJWuELBkqGUEpdzRNMQYjxYWB72SxcP2Gwp+PAN8zE0Ea5N/s7ikGcDmfPNA8YHPYV9O1/m1u21mmNtraluN4ytXM5vjlrcmk4VOIHEILmnp19Z4hOVrwlt6pkcyyJ/H4IO1QQe1hYer/0pCyBfZbLnN4to0DCAiuGyQhnccf9tiySEhX4u0y3agZS7EJ0yc35m2MxEwyz8poy7ETHelF11azAlheDyuB+9atixR/hxPeW53Jzpx7SuBD1dq0GaeN+y1cgmAegydBrt5Z5PaZXzbOsw2CS7vUvbasoSO6Fhj9LIJu/hQATpcd6Eg8SX3U2jArjEBhhOZOqEWRxCqh46vDXTtDE+e7zfISrS5Zpg4RQYapUYbACK4eOrxa4cTpxxFZG/RSTx2oyIS0AWHD76yiNw0eis/BAbYHNSt+sZLtgnsE8uLzXVOyBcUAueuBXhHiZjbIMJNXQzh6M7GNk=
+    file_glob: true
+    file: dist/*
+    skip_cleanup: true
+    on:
+        tags: true

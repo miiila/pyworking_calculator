@@ -31,6 +31,9 @@ script:
     fi
   - for f in $(ls dist); do mv dist/$f dist/$(uname -s)-$f; done
 
+notifications:
+  email: false
+
 deploy:
     provider: releases
     api_key:

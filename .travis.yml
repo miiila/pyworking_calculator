@@ -7,10 +7,16 @@ matrix:
     - os: linux
       python: 3.6
       language: python
+    - os: osx
+      language: generic
 
 install:
+  - |
+    if [[ "$(uname -s)" == 'Darwin' ]]; then
+        brew install python3
+    fi
   - python3 -m pip install --upgrade pip
-  - python3 -m pip install pyQt5 pytest pyinstaller
+  - python3 -m pip install pyqt5 pytest pyinstaller
 
 script:
   - python3 -m pytest -vv tests/
@@ -18,6 +24,12 @@ script:
       --exclude-module tkinter
       --add-data calculator:calculator
       -F -w
+  - |
+    if [[ "$(uname -s)" == 'Darwin' ]]; then
+        zip -r dist/calculator-app.app.zip dist/calculator-app.app
+        rm -rvf dist/calculator-app.app
+    fi
+  - for f in $(ls dist); do mv dist/$f dist/$(uname -s)-$f; done
 
 deploy:
     provider: releases
